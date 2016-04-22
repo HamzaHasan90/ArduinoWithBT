@@ -14,7 +14,6 @@ import com.hamza.arduino.model.User;
  */
 public class LocalStore {
 
-    
     public static final String storage_file_name = "userDetails";
     public static final String LOGGED_IN = "loggedIn";
     public static final String LOGGED_USERNAME = "loggedUsername";
