@@ -45,7 +45,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 activateBluetooth();
             } else {
 
-                if (localStore.isUserLoggedIn() && !localStore.getLoggedUsername().equals("")) {
+                Intent goToMain = new Intent(this,MainActivity.class);
+                startActivity(goToMain);
+                /*if (localStore.isUserLoggedIn() && !localStore.getLoggedUsername().equals("")) {
                     Intent intent = new Intent(this, MainActivity.class);
                     intent.putExtra(LocalStore.LOGGED_USERNAME, localStore.getLoggedUsername());
                     startActivity(intent);
@@ -60,7 +62,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     tvDoctorReg = (TextView) findViewById(R.id.tv_doctor_reg);
                     tvDoctorReg.setOnClickListener(this);
                     tvPatientReg.setOnClickListener(this);
-                }
+                }*/
             }
 
 

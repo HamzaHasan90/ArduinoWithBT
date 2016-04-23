@@ -88,7 +88,9 @@ public class BluetoothConnectActivity extends Activity {
             mScanBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View arg0) {
-                    mBluetoothAdapter.startDiscovery();
+                    if(mBluetoothAdapter.isEnabled()) {
+                        mBluetoothAdapter.startDiscovery();
+                    }
                 }
             });
 
@@ -97,7 +99,6 @@ public class BluetoothConnectActivity extends Activity {
                 public void onClick(View v) {
                     if (mBluetoothAdapter.isEnabled()) {
                         mBluetoothAdapter.disable();
-
                         showDisabled();
                     } else {
                         Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -188,7 +189,6 @@ public class BluetoothConnectActivity extends Activity {
 
                 if (state == BluetoothAdapter.STATE_ON) {
                     showToast("Enabled");
-
                     showEnabled();
                 }
             } else if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
@@ -199,9 +199,14 @@ public class BluetoothConnectActivity extends Activity {
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
 
                 mProgressDlg.dismiss();
-                Intent newIntent = new Intent(BluetoothConnectActivity.this, DeviceListActivity.class);
-                newIntent.putParcelableArrayListExtra("device.list", mDeviceList);
-                startActivity(newIntent);
+                if( mDeviceList.size() == 0){
+                    showToast("No devices found ! ");
+
+                }else {
+                    Intent newIntent = new Intent(BluetoothConnectActivity.this, DeviceListActivity.class);
+                    newIntent.putParcelableArrayListExtra("device.list", mDeviceList);
+                    startActivity(newIntent);
+                }
 
             } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
 
