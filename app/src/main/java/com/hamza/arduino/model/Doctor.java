@@ -10,6 +10,10 @@ public class Doctor extends User {
     public Doctor(String email, String pwd) {
         super(email, pwd);
     }
+    public Doctor(int id,String fname, String lname, String speciality) {
+        super(id,fname, lname);
+        this.speciality = speciality;
+    }
 
     public String getSpeciality() {
         return speciality;

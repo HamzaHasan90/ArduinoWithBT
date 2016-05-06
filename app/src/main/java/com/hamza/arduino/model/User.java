@@ -4,11 +4,17 @@ package com.hamza.arduino.model;
  * Created by Hamza on 3/25/2016.
  */
 public class User {
-
+    private int id;
     private String fname;
     private String lname;
     private String email;
     private String pwd;
+
+    public User(int id, String fname, String lname) {
+        this.fname = fname;
+        this.lname = lname;
+        this.id = id;
+    }
 
     public User(String email, String pwd) {
         this.email = email;
@@ -20,6 +26,7 @@ public class User {
         this.email = email;
         this.pwd = pwd;
     }
+
 
     public String getFname() {
         return fname;
@@ -51,5 +58,13 @@ public class User {
 
     public void setPwd(String pwd) {
         this.pwd = pwd;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

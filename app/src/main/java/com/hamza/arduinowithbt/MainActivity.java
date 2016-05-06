@@ -5,53 +5,100 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.hamza.arduino.DB.LocalStore;
+import com.hamza.arduino.adapters.ScansAdapter;
+import com.hamza.arduino.model.Scan;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
+import java.util.regex.PatternSyntaxException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String MAIN_ACTIVITY = "MainActivity";
+    public static final String SCAN_IMAGE = "ScanImage";
     private BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     private Button scanButton;
     private LocalStore localStore;
     private BluetoothDevice pairedBluetoothDevice;
     private UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
     private BluetoothSocket socket;
+    private ListView scansList;
+    private Calendar calendar = Calendar.getInstance();
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy / MM / dd ");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
             setContentView(R.layout.activity_main);
-            // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-            // setSupportActionBar(toolbar);
-            //Intent intent = getIntent();
-            //String name = intent.getStringExtra(LocalStore.LOGGED_USERNAME);
             localStore = new LocalStore(this);
             scanButton = (Button) findViewById(R.id.btn_scan);
             scanButton.setOnClickListener(this);
+            scansList = (ListView) findViewById(R.id.scan_list);
 
             Toast.makeText(this, "Welcome " + localStore.getLoggedUsername(), Toast.LENGTH_SHORT).show();
+            final Scan[] scans = processScans();
+            scansList.setAdapter(new ScansAdapter(this, R.layout.scans_list_item_row, scans));
+
+            scansList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent= new Intent(getBaseContext(),ScanImageActivity.class);
+                    intent.putExtra(SCAN_IMAGE,scans[position].getScanImage());
+                    startActivity(intent);
+                }
+            });
 
         } catch (Exception e) {
-            e.printStackTrace();
+            showToast("Exception " + e.toString());
         }
 
 
     }
 
+    private Scan[] processScans() throws ParseException {
+
+        Scan[] scans = {
+                new Scan("Image One"  , getFormated(getToday(calendar)), R.drawable.g1),
+                new Scan("Image Two"  , getFormated(getDay(calendar,-1)), R.drawable.g2),
+                new Scan("Image Three", getFormated(getDay(calendar,-2)), R.drawable.g3),
+                new Scan("Image Four" , getFormated(getDay(calendar,-3)), R.drawable.g4)
+        };
+        return scans;
+    }
+
+    private Date getDay(Calendar calendar,int i){
+        calendar.add(Calendar.DATE,i);
+        return calendar.getTime();
+    }
+
+    private Date getFormated(Date date)throws ParseException{
+        return formatter.parse(formatter.format(date));
+    }
+    private Date getToday(Calendar calendar){
+        return calendar.getTime();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

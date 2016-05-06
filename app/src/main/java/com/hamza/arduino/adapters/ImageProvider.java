@@ -1,4 +1,4 @@
-package com.hamza.arduino.misc;
+package com.hamza.arduino.adapters;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;

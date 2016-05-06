@@ -24,8 +24,7 @@ import java.util.Set;
 public class BluetoothConnectActivity extends Activity {
     private TextView mStatusTv;
     private Button mActivateBtn;
-    private Button mPairedBtn;
-    private Button mScanBtn;
+    private Button mPairedBtn, mScanBtn, mGoToMain;
     private ProgressDialog mProgressDlg;
     private ArrayList<BluetoothDevice> mDeviceList = new ArrayList<BluetoothDevice>();
     private BluetoothAdapter mBluetoothAdapter;
@@ -41,9 +40,19 @@ public class BluetoothConnectActivity extends Activity {
         mActivateBtn = (Button) findViewById(R.id.btn_enable);
         mPairedBtn = (Button) findViewById(R.id.btn_view_paired);
         mScanBtn = (Button) findViewById(R.id.btn_scan);
+        mGoToMain = (Button) findViewById(R.id.btn_go_to_mainn);
         localStore = new LocalStore(this);
-
         IntentFilter filter = new IntentFilter();
+        Toast.makeText(this," Click on 'Go to main' ",
+                        Toast.LENGTH_LONG).show();
+        mGoToMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
         filter.addAction(BluetoothDevice.ACTION_FOUND);
@@ -113,9 +122,9 @@ public class BluetoothConnectActivity extends Activity {
                 showDisabled();
             }
         }
-        Set<BluetoothDevice>devices =  mBluetoothAdapter.getBondedDevices();
-        for (BluetoothDevice bluetoothDevice : devices){
-            if (bluetoothDevice.getAddress().equals(localStore.getPairedMacAddress())){
+        Set<BluetoothDevice> devices = mBluetoothAdapter.getBondedDevices();
+        for (BluetoothDevice bluetoothDevice : devices) {
+            if (bluetoothDevice.getAddress().equals(localStore.getPairedMacAddress())) {
                 goToLoginActivity();
             }
         }
@@ -206,11 +215,11 @@ public class BluetoothConnectActivity extends Activity {
             } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
 
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                Set<BluetoothDevice>devices =  mBluetoothAdapter.getBondedDevices();
+                Set<BluetoothDevice> devices = mBluetoothAdapter.getBondedDevices();
 
-                for (BluetoothDevice bluetoothDevice : devices){
-                    if (bluetoothDevice.getAddress().equals(localStore.getPairedMacAddress())){
-                        Intent intent1 = new Intent(BluetoothConnectActivity.this,MainActivity.class);
+                for (BluetoothDevice bluetoothDevice : devices) {
+                    if (bluetoothDevice.getAddress().equals(localStore.getPairedMacAddress())) {
+                        Intent intent1 = new Intent(BluetoothConnectActivity.this, MainActivity.class);
                         startActivity(intent1);
                     }
                 }

@@ -28,12 +28,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     LocalStore localStore;
     private BluetoothAdapter bluetoothAdapter;
     private Set<BluetoothDevice> devices;
+    private Button btnGoToLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
         localStore = new LocalStore(this);
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        btnGoToLogin = (Button) findViewById(R.id.go_to_login);
+
 
         if (bluetoothAdapter != null) {
 
@@ -50,7 +54,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     intent.putExtra(LocalStore.LOGGED_USERNAME, localStore.getLoggedUsername());
                     startActivity(intent);
                 } else {
-                    setContentView(R.layout.activity_login);
                     btnLogin = (Button) findViewById(R.id.btn_login);
                     btnLogin.setOnClickListener(this);
 

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctors>
+    <doctor id="1" name="AAA" speciality="SSS"/>
+    <doctor id="1" name="BBB" speciality="DDD"/>
+    <doctor id="1" name="CCC" speciality="XXX"/>
+    <doctor id="1" name="DDD" speciality="ZZZ"/>
+    <doctor id="1" name="EEE" speciality="VVV"/>
+    <doctor id="1" name="FFF" speciality="YYY"/>
+</doctors>
