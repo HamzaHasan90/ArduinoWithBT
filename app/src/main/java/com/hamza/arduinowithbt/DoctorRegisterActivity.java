@@ -45,7 +45,7 @@ public class DoctorRegisterActivity extends AppCompatActivity implements View.On
                 String email = etEmail.getText().toString();
                 String pwd = etPwd.getText().toString();
                 String confPwd = etPwd.getText().toString();
-                doctor = new Doctor(email, pwd);
+                doctor = new Doctor(fname,lname,speciality,email, pwd);
                 doctor.setFname(fname);
                 doctor.setLname(lname);
                 doctor.setSpeciality(speciality);

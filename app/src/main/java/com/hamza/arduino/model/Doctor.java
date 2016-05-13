@@ -6,12 +6,10 @@ package com.hamza.arduino.model;
 public class Doctor extends User {
 
     private String speciality;
+    private int id;
 
-    public Doctor(String email, String pwd) {
-        super(email, pwd);
-    }
-    public Doctor(int id,String fname, String lname, String speciality) {
-        super(id,fname, lname);
+    public Doctor(String fName, String lName,String speciality, String email, String pwd) {
+        super(fName, lName, email, pwd);
         this.speciality = speciality;
     }
 
@@ -21,5 +19,13 @@ public class Doctor extends User {
 
     public void setSpeciality(String speciality) {
         this.speciality = speciality;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 }

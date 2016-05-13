@@ -7,14 +7,16 @@ import java.util.Date;
  */
 public class Scan {
 
-    public String name;
-    public int scanImage;
-    public Date scanDate;
+    private  String name;
+    private int scanImage;
+    private String scanImageName;
+    private String scanDate;
 
-    public Scan (String name, Date scanDate, int scanImage){
+    public Scan (String name, String scanDate, int scanImage, String scanImageName){
         this.name = name;
         this.scanDate = scanDate;
         this.scanImage = scanImage;
+        this.scanImageName = scanImageName;
     }
 
 
@@ -26,11 +28,11 @@ public class Scan {
         return name;
     }
 
-    public Date getScanDate() {
+    public String getScanDate() {
         return scanDate;
     }
 
-    public void setScanDate(Date scanDate) {
+    public void setScanDate(String scanDate) {
         this.scanDate = scanDate;
     }
 
@@ -40,5 +42,13 @@ public class Scan {
 
     public int getScanImage() {
         return scanImage;
+    }
+
+    public void setScanImageName(String scanImageName) {
+        this.scanImageName = scanImageName;
+    }
+
+    public String getScanImageName() {
+        return scanImageName;
     }
 }

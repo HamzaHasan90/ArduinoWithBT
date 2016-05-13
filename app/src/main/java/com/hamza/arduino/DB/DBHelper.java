@@ -62,8 +62,7 @@ public class DBHelper extends SQLiteOpenHelper {
             if (cursor.getCount()>0) {
                 cursor.moveToFirst();
 
-                User user = new User(cursor.getString(0), cursor.getString(1),
-                        cursor.getString(2));
+                User user = new User(cursor.getString(0), cursor.getString(1));
                 return user;
             }else{
                 return null;

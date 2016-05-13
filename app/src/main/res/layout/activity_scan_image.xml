@@ -19,6 +19,7 @@
         android:layout_alignStart="@+id/docs_list"
         android:background="@android:color/white" />
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,10 +32,23 @@
         android:layout_alignStart="@+id/docs_listView" />
 
     <ListView
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/docs_listView"
         android:layout_below="@+id/docs_list"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/scan_date"
+        android:layout_below="@+id/iv_full_scan_image"
+        android:layout_alignRight="@+id/iv_full_scan_image"
+        android:layout_alignEnd="@+id/iv_full_scan_image" />
 
 </RelativeLayout>

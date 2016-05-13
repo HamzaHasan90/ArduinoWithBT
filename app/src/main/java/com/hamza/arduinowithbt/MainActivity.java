@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static final String MAIN_ACTIVITY = "MainActivity";
     public static final String SCAN_IMAGE = "ScanImage";
+    public static final String SCAN_IMAGE_NAME = "ScanImageName";
+    public static final String SCAN_DATE = "ScanDate";
     private BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     private Button scanButton;
     private LocalStore localStore;
@@ -44,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private BluetoothSocket socket;
     private ListView scansList;
     private Calendar calendar = Calendar.getInstance();
-    SimpleDateFormat formatter = new SimpleDateFormat("yyyy / MM / dd ");
 
 
     @Override
@@ -64,8 +65,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             scansList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent= new Intent(getBaseContext(),ScanImageActivity.class);
-                    intent.putExtra(SCAN_IMAGE,scans[position].getScanImage());
+                    Intent intent = new Intent(getBaseContext(), ScanImageActivity.class);
+                    intent.putExtra(SCAN_IMAGE, scans[position].getScanImage());
+                    intent.putExtra(SCAN_DATE, scans[position].getScanDate());
+                    intent.putExtra(SCAN_IMAGE_NAME,scans[position].getScanImageName());
                     startActivity(intent);
                 }
             });
@@ -78,25 +81,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private Scan[] processScans() throws ParseException {
-
+        String s = this.getResources().getResourceEntryName(R.drawable.g1)+".png";
         Scan[] scans = {
-                new Scan("Image One"  , getFormated(getToday(calendar)), R.drawable.g1),
-                new Scan("Image Two"  , getFormated(getDay(calendar,-1)), R.drawable.g2),
-                new Scan("Image Three", getFormated(getDay(calendar,-2)), R.drawable.g3),
-                new Scan("Image Four" , getFormated(getDay(calendar,-3)), R.drawable.g4)
+                new Scan("Image One"  , getFormated(getToday(calendar))   , R.drawable.g1, this.getResources().getResourceEntryName(R.drawable.g1)+".png"),
+                new Scan("Image Two"  , getFormated(getDay(calendar, -1)) , R.drawable.g2, this.getResources().getResourceEntryName(R.drawable.g2)+".png"),
+                new Scan("Image Three", getFormated(getDay(calendar, -2)) , R.drawable.g3, this.getResources().getResourceEntryName(R.drawable.g3)+".png"),
+                new Scan("Image Four" , getFormated(getDay(calendar, -3)) , R.drawable.g4, this.getResources().getResourceEntryName(R.drawable.g4)+".png")
         };
         return scans;
     }
 
-    private Date getDay(Calendar calendar,int i){
-        calendar.add(Calendar.DATE,i);
+    private Date getDay(Calendar calendar, int i) {
+        calendar.add(Calendar.DATE, i);
         return calendar.getTime();
     }
 
-    private Date getFormated(Date date)throws ParseException{
-        return formatter.parse(formatter.format(date));
+    private String getFormated(Date date) throws ParseException {
+        SimpleDateFormat mdformat = new SimpleDateFormat("yyyy-MMM-dd");
+        String strDate = mdformat.format(calendar.getTime());
+        return strDate;
     }
-    private Date getToday(Calendar calendar){
+
+    private Date getToday(Calendar calendar) {
         return calendar.getTime();
     }
 
